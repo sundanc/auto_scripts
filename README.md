@@ -2,6 +2,14 @@
 
 A collection of useful automation scripts for system administration, development, and DevOps tasks.
 
+## Directory Structure
+
+- **system/** - Scripts for system administration tasks
+- **development/** - Scripts for development workflows and tools
+- **devops/** - Scripts for deployment and CI/CD automation
+- **database/** - Scripts for database management and maintenance
+
+
 ## Available Scripts
 
 ### System Administration
