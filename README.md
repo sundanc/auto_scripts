@@ -1,3 +1,27 @@
+<div align="center">
+  <br>
+  <img src="https://img.shields.io/badge/AUTOMATION-SCRIPTS-orange?style=for-the-badge" alt="Automation Scripts"/>
+  <img src="https://img.shields.io/badge/OPERATIONS-SPECIALIST-blue?style=for-the-badge" alt="Operations Specialist"/>
+  <br><br>
+  <table>
+    <tr>
+      <td>
+        <img src="https://img.shields.io/badge/Author-@sundanc-success?style=flat-square" alt="Author"/>
+      </td>
+      <td>
+        <img src="https://img.shields.io/badge/GitHub-sundanc-4183C4?style=flat-square&logo=github" alt="GitHub"/>
+      </td>
+      <td>
+        <img src="https://img.shields.io/badge/Status-Active-success?style=flat-square" alt="Status"/>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <sup>⭐ Please star if you find this useful ⭐</sup>
+  <br>
+  <sup>📋 Original content - Attribution required if used or modified 📋</sup>
+</div>
+
 # Auto-Scripts Collection
 
 A collection of useful automation scripts for system administration, development, and DevOps tasks.
