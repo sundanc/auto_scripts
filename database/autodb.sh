@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 # Advanced database maintenance script with backup, optimization, and reporting
 
 DB_HOST="localhost"

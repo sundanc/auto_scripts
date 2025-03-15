@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 # deploy-app.sh - Deploy an application from git to a target server
 
 # Usage information

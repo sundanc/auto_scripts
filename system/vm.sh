@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 
 # Enhanced VM detection
 

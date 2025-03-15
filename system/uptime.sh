@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 #
 UPTIME=$(uptime -s)
 DAYS=$(awk '{print int($1/86400)}' /proc/uptime)

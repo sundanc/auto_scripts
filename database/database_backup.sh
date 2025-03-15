@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 
 # Do not forget to install MySQL
 # sudo apt install mysql-server

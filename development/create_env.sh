@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 
 # Check if python3 is installed
 if ! command -v python3 &> /dev/null

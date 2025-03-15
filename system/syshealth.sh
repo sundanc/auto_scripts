@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 # Monitor system health with adaptive thresholds based on historical data
 
 HISTORY_DIR="/var/log/system-metrics"

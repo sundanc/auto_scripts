@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 HOST="google.com"
 OUTPUT_FILE="/home/username/output.txt"
 # Check the connectivity

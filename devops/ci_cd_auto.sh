@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 # filepath: /home/ary/Documents/daily_tracker/cicd_automation.sh
 
 # CI/CD Automation Script - Automates integration, testing, and deployment

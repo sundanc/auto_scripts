@@ -1,4 +1,5 @@
 #!/bin/bash
+# GitHub: https://github.com/sundanc/auto_scripts
 
 # Define some color variables
 RED='\033[0;31m'
