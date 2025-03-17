@@ -1,0 +1,24 @@
+# IT Arsenal Configuration Template
+# Copy this file to arsenal.conf and customize as needed
+
+# Notification settings
+ADMIN_EMAIL="admin@example.com"
+NOTIFICATION_ENABLED="yes"
+LOG_LEVEL="INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+# Default directories
+DEFAULT_BACKUP_DIR="${HOME}/backups"
+DEFAULT_TEMP_DIR="/tmp/arsenal"
+
+# Environment settings
+DEFAULT_ENVIRONMENT="production"  # Options: development, staging, production
+
+# Monitoring settings
+MONITOR_INTERVAL="5"  # Seconds between monitoring checks
+HEALTH_CHECK_THRESHOLD="85"  # Percentage threshold for alerts
+
+# System settings
+AUTO_RESTART_SERVICES="yes"  # Auto-restart failed services
+SYSTEM_ALERT_CPU="90"  # CPU usage percentage that triggers alerts
+SYSTEM_ALERT_MEM="85"  # Memory usage percentage that triggers alerts
+SYSTEM_ALERT_DISK="90"  # Disk usage percentage that triggers alerts
