@@ -28,7 +28,7 @@ A collection of useful automation scripts for system administration, development
 
 ## IT Arsenal Command Center
 
-The IT Arsenal is a unified command center that brings all scripts together into a cohesive toolkit. This central interface makes it easy to access all scripts in one place, with consistent logging, configuration, and execution handling.
+The IT Arsenal is a unified command center that brings all scripts together into a cohesive toolkit. This central interface makes it easy to access all scripts in one place, with consistent logging, configuration, and execution handling. [Check my blog post](https://brokeninfra.pages.dev/using_it_arsenal/#advanced-features)
 
 To launch the arsenal:
 
