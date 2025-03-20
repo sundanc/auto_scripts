@@ -104,10 +104,13 @@ display_system_menu() {
     echo -e "  ${GREEN}7.${NC} Connectivity Check (connectivity_check.sh)"
     echo -e "  ${GREEN}8.${NC} System Update & Upgrade (updateupgrade.sh)"
     echo -e "  ${GREEN}9.${NC} Display Uptime (uptime.sh)"
+    echo -e "  ${GREEN}10.${NC} Network Diagnostics (network_diagnostics.sh)"
+    echo -e "  ${GREEN}11.${NC} Log Analyzer (log_analyzer.sh)"
+    echo -e "  ${GREEN}12.${NC} System Benchmark (system_benchmark.sh)"
     echo -e "  ${GREEN}0.${NC} Back to Main Menu"
     echo -e ""
     echo -e "${BLUE}------------------------------------------------------------${NC}"
-    echo -ne "Enter your choice [0-9]: "
+    echo -ne "Enter your choice [0-12]: "
 }
 
 # Function to display development tools menu
@@ -387,6 +390,15 @@ handle_system_menu() {
                 ;;
             9)
                 execute_script "$SYSTEM_DIR/uptime.sh"
+                ;;
+            10)
+                execute_script "$SYSTEM_DIR/network_diagnostics.sh"
+                ;;
+            11)
+                execute_script "$SYSTEM_DIR/log_analyzer.sh"
+                ;;
+            12)
+                execute_script "$SYSTEM_DIR/system_benchmark.sh"
                 ;;
             0)
                 return
