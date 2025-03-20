@@ -87,6 +87,9 @@ We've created a detailed tutorial to help you get the most out of the IT Arsenal
 | `disk_usage.sh` | Monitors disk usage and alerts when partitions exceed the defined threshold (85%). |
 | `connectivity_check.sh` | Checks network connectivity to a specified host and logs the result. |
 | `security_audit.sh` | Comprehensive security audit tool that scans for common vulnerabilities and configuration issues. |
+| `network_diagnostics.sh` | Advanced network troubleshooting tool that performs comprehensive diagnostics including interface information, DNS resolution, connectivity tests, gateway testing, route analysis, speed testing, and hardware checks. |
+| `log_analyzer.sh` | Powerful log analysis tool that identifies error patterns, authentication failures, service restarts, and resource issues in system logs with detailed reporting. |
+| `system_benchmark.sh` | Complete system performance benchmark tool measuring CPU, memory, disk, and network performance with detailed metrics and reports. |
 
 ### Development Tools
 
