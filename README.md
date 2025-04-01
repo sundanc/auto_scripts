@@ -22,6 +22,8 @@
   <sup>📋 Original content - Attribution required if used or modified 📋</sup>
 </div>
 
+## **[Buy Me A Coffee](https://buymeacoffee.com/sundanc)**
+
 # Auto-Scripts Collection
 
 A collection of useful automation scripts for system administration, development, and DevOps tasks.
