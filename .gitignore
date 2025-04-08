@@ -1,0 +1,29 @@
+# Ignore all log files
+*.log
+
+# Ignore configuration files
+*.conf
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore virtual environment directories
+env/
+venv/
+
+# Ignore backup files
+*.bak
+*.old
+
+# Ignore temporary files
+*.swp
+*.swo
+*~
+.DS_Store
+*.tmp
+
+# Ignore directories and files related to system logs and backups
+logs/
+backups/
