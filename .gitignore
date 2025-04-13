@@ -27,3 +27,37 @@ venv/
 # Ignore directories and files related to system logs and backups
 logs/
 backups/
+
+# Ignore temporary files created by editors
+*.log~
+*.swp
+*.swo
+
+# Ignore Python virtual environments
+.env/
+.venv/
+
+# Ignore compiled Python files
+*.py[cod]
+__pycache__/
+
+# Ignore system-specific files
+Thumbs.db
+
+# Ignore temporary directories
+tmp/
+temp/
+
+# Ignore backup and cache directories
+cache/
+
+# Ignore logs and reports
+reports/
+
+# Ignore generated configuration files
+*.conf.example
+*.conf.bak
+
+# Ignore test output
+test-results/
+coverage/

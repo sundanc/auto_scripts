@@ -1,0 +1,14 @@
+{
+    "name": "System Metrics",
+    "version": "1.0",
+    "description": "Collects and displays detailed system metrics",
+    "author": "Arsenal Team",
+    "category": "system",
+    "main_function": "system_metrics_main",
+    "menu_title": "System Metrics Monitor",
+    "dependencies": ["ps", "free", "df", "bc", "iostat"],
+    "compatibility": {
+        "min_arsenal_version": "1.0",
+        "os": ["linux", "debian", "ubuntu", "centos", "fedora", "arch"]
+    }
+}

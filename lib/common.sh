@@ -10,6 +10,7 @@ ARSENAL_ROOT="$(dirname "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")")"
 CONFIG_DIR="$ARSENAL_ROOT/config"
 LOGS_DIR="$ARSENAL_ROOT/logs"
 CONFIG_FILE="$CONFIG_DIR/arsenal.conf"
+CREDS_DIR="$CONFIG_DIR/credentials"
 
 # =============================================
 # COLOR DEFINITIONS
@@ -34,8 +35,35 @@ arsenal_load_config() {
     return 0
   else
     echo -e "${YELLOW}Warning: Configuration file not found: $CONFIG_FILE${NC}" >&2
+    echo -e "${YELLOW}Creating default configuration...${NC}" >&2
+    arsenal_create_default_config
     return 1
   fi
+}
+
+# Create default configuration file
+arsenal_create_default_config() {
+  mkdir -p "$CONFIG_DIR"
+  
+  cat > "$CONFIG_FILE" << EOF
+# IT Arsenal Configuration (auto-generated)
+ADMIN_EMAIL="admin@example.com"
+NOTIFICATION_ENABLED="no"
+LOG_LEVEL="INFO"
+DEFAULT_BACKUP_DIR="$HOME/backups"
+DEFAULT_LOG_DIR="$LOGS_DIR"
+DEFAULT_ENVIRONMENT="production"
+MONITOR_INTERVAL="5"
+HEALTH_CHECK_THRESHOLD="85"
+SECURITY_LEVEL="normal"
+DB_DEFAULT_USER="root"
+DB_DEFAULT_HOST="localhost"
+DB_DEFAULT_PORT="3306"
+DB_BACKUP_RETENTION="30"
+DEFAULT_CONNECTIVITY_HOST="google.com"
+EOF
+
+  echo -e "${BLUE}Default configuration created at: $CONFIG_FILE${NC}" >&2
 }
 
 # Get a configuration value with default fallback
@@ -44,6 +72,20 @@ arsenal_get_config() {
   local default="$2"
   local value
   
+  # Load config if not already loaded
+  if [[ -z "$ADMIN_EMAIL" && -f "$CONFIG_FILE" ]]; then
+    source "$CONFIG_FILE"
+  fi
+  
+  # Use eval to get the value from variable name
+  eval "value=\${$key}"
+  
+  if [[ -n "$value" ]]; then
+    echo "$value"
+    return 0
+  fi
+  
+  # Try to get from config file directly
   if [[ -f "$CONFIG_FILE" ]]; then
     value=$(grep "^$key=" "$CONFIG_FILE" | cut -d'=' -f2- | tr -d '"')
     if [[ -n "$value" ]]; then
@@ -61,6 +103,8 @@ arsenal_set_config() {
   local key="$1"
   local value="$2"
   
+  arsenal_load_config &>/dev/null
+  
   if [[ -f "$CONFIG_FILE" ]]; then
     if grep -q "^$key=" "$CONFIG_FILE"; then
       # Update existing value
@@ -70,9 +114,8 @@ arsenal_set_config() {
       echo "$key=\"$value\"" >> "$CONFIG_FILE"
     fi
   else
-    mkdir -p "$CONFIG_DIR"
-    echo "# IT Arsenal Configuration" > "$CONFIG_FILE"
-    echo "$key=\"$value\"" >> "$CONFIG_FILE"
+    arsenal_create_default_config
+    arsenal_set_config "$key" "$value"  # Recursively call after creating config
   fi
 }
 
@@ -127,6 +170,73 @@ arsenal_notify() {
   
   if [[ "$notification_enabled" == "yes" ]] && command -v mail &>/dev/null; then
     echo "$message" | mail -s "[$script_name] Alert" "$admin_email"
+  fi
+  
+  return 0
+}
+
+# =============================================
+# NEW CREDENTIAL MANAGEMENT
+# =============================================
+
+# Securely store a credential
+arsenal_store_credential() {
+  local credential_name="$1"
+  local credential_value="$2"
+  local credential_file="$CREDS_DIR/$credential_name.cred"
+  
+  # Ensure credentials directory exists with proper permissions
+  mkdir -p "$CREDS_DIR"
+  chmod 700 "$CREDS_DIR"
+  
+  # Store credential with restricted permissions
+  echo "$credential_value" > "$credential_file"
+  chmod 600 "$credential_file"
+  
+  echo "Credential stored securely in $credential_file"
+}
+
+# Retrieve a stored credential
+arsenal_get_credential() {
+  local credential_name="$1"
+  local credential_file="$CREDS_DIR/$credential_name.cred"
+  
+  if [[ -f "$credential_file" ]]; then
+    cat "$credential_file"
+    return 0
+  else
+    return 1
+  fi
+}
+
+# =============================================
+# DEPENDENCY CHECKING
+# =============================================
+
+# Check if required tools are installed
+arsenal_check_dependencies() {
+  local tools=("$@")
+  local missing_tools=()
+  
+  for tool in "${tools[@]}"; do
+    if ! command -v "$tool" &> /dev/null; then
+      missing_tools+=("$tool")
+    fi
+  done
+  
+  if [[ ${#missing_tools[@]} -gt 0 ]]; then
+    echo -e "${YELLOW}Warning: Missing required tools: ${missing_tools[*]}${NC}" >&2
+    
+    # Provide installation instructions based on detected OS
+    if [[ -f /etc/debian_version ]]; then
+      echo -e "${YELLOW}Install on Debian/Ubuntu with: sudo apt install ${missing_tools[*]}${NC}" >&2
+    elif [[ -f /etc/redhat-release ]]; then
+      echo -e "${YELLOW}Install on CentOS/RHEL with: sudo yum install ${missing_tools[*]}${NC}" >&2
+    elif [[ -f /etc/arch-release ]]; then
+      echo -e "${YELLOW}Install on Arch Linux with: sudo pacman -S ${missing_tools[*]}${NC}" >&2
+    fi
+    
+    return 1
   fi
   
   return 0
@@ -190,25 +300,36 @@ arsenal_confirm() {
   fi
 }
 
-# Get input with optional default value
+# Get input with optional default value and validation
 arsenal_prompt() {
   local message="$1"
   local default="$2"
+  local validate_func="$3"
   local input
   
-  if [[ -n "$default" ]]; then
-    echo -ne "${YELLOW}$message [${default}]: ${NC}"
-  else
-    echo -ne "${YELLOW}$message: ${NC}"
-  fi
-  
-  read input
-  
-  if [[ -z "$input" && -n "$default" ]]; then
-    echo "$default"
-  else
-    echo "$input"
-  fi
+  while true; do
+    if [[ -n "$default" ]]; then
+      echo -ne "${YELLOW}$message [${default}]: ${NC}"
+    else
+      echo -ne "${YELLOW}$message: ${NC}"
+    fi
+    
+    read input
+    
+    if [[ -z "$input" && -n "$default" ]]; then
+      input="$default"
+    fi
+    
+    if [[ -z "$validate_func" || -z "$input" ]]; then
+      echo "$input"
+      return 0
+    elif eval "$validate_func \"$input\""; then
+      echo "$input"
+      return 0
+    else
+      echo -e "${RED}Invalid input. Please try again.${NC}"
+    fi
+  done
 }
 
 # Check if script is being run with root/sudo
@@ -233,6 +354,29 @@ arsenal_get_os() {
   else
     uname | tr '[:upper:]' '[:lower:]'
   fi
+}
+
+# Get operating system details
+arsenal_get_os_info() {
+  local os_info=()
+  
+  if [[ -f /etc/os-release ]]; then
+    . /etc/os-release
+    os_info+=("ID=$ID")
+    os_info+=("VERSION_ID=$VERSION_ID")
+    os_info+=("NAME=$NAME")
+    os_info+=("PRETTY_NAME=$PRETTY_NAME")
+  else
+    os=$(uname -s)
+    os_info+=("ID=$os")
+    os_info+=("NAME=$os")
+  fi
+  
+  # Add kernel version
+  kernel=$(uname -r)
+  os_info+=("KERNEL=$kernel")
+  
+  echo "${os_info[*]}"
 }
 
 # Get IP address
@@ -302,6 +446,36 @@ arsenal_spinner() {
       sleep 0.1
     done
   done
+}
+
+# Check existence of a file with proper error handling
+arsenal_check_file() {
+  local file_path="$1"
+  local required=${2:-true}
+  
+  if [[ -f "$file_path" ]]; then
+    return 0
+  elif [[ "$required" == "true" ]]; then
+    echo -e "${RED}Error: Required file not found: $file_path${NC}" >&2
+    return 1
+  else
+    echo -e "${YELLOW}Warning: Optional file not found: $file_path${NC}" >&2
+    return 1
+  fi
+}
+
+# Enhanced version detection for tools
+arsenal_get_tool_version() {
+  local tool="$1"
+  local version_args="${2:---version}"
+  
+  if command -v "$tool" &> /dev/null; then
+    "$tool" $version_args 2>&1 | head -n1
+    return 0
+  else
+    echo "Not installed"
+    return 1
+  fi
 }
 
 # =============================================

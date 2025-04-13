@@ -241,6 +241,51 @@ Key settings you can customize:
 - Monitoring thresholds
 - Logging levels
 
+### Compatibility Checking
+
+IT Arsenal features a powerful compatibility checking system to ensure scripts will work on your environment:
+
+1. Select `9` for Check System Compatibility from the main menu
+2. View compatibility status of all scripts with your system
+
+The compatibility checker provides:
+
+- Clear indication of which scripts will work on your system
+- Detailed explanations of compatibility issues
+- OS-specific installation commands for missing dependencies
+- User privilege requirements for each script
+- Automated checks before script execution
+
+**Using the compatibility checker:**
+
+Before running a script, IT Arsenal automatically checks if your system meets the requirements. If issues are found, you'll see:
+- A warning indicating potential compatibility issues
+- Details about missing dependencies or requirements
+- Installation instructions specific to your OS
+- An option to continue anyway or cancel
+
+If a script fails, IT Arsenal offers to run a detailed compatibility check to help diagnose the issue.
+
+### Script Debugging
+
+For troubleshooting script issues:
+
+1. Run `system/script_debug.sh` with appropriate options
+2. Review the comprehensive analysis of potential issues
+
+The script debug tool can:
+- Check script syntax without executing it
+- Verify that dependencies are installed
+- Identify common coding mistakes
+- Validate OS compatibility
+- Check for proper error handling and logging
+- Detect hardcoded paths and other issues
+
+For example, to debug an issue with the `vm.sh` script:
+```bash
+./system/script_debug.sh -s system/vm.sh
+```
+
 ### Logging System
 
 To view operation logs:

@@ -1,7 +1,7 @@
 # IT Arsenal Configuration Template
 # Copy this file to arsenal.conf and customize as needed
 
-# Notification settings
+# User & Notification settings
 ADMIN_EMAIL="admin@example.com"
 NOTIFICATION_ENABLED="yes"
 LOG_LEVEL="INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
@@ -9,6 +9,7 @@ LOG_LEVEL="INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
 # Default directories
 DEFAULT_BACKUP_DIR="${HOME}/backups"
 DEFAULT_TEMP_DIR="/tmp/arsenal"
+DEFAULT_LOG_DIR="${HOME}/Documents/Repositories/auto_scripts/logs"
 
 # Environment settings
 DEFAULT_ENVIRONMENT="production"  # Options: development, staging, production
@@ -22,3 +23,18 @@ AUTO_RESTART_SERVICES="yes"  # Auto-restart failed services
 SYSTEM_ALERT_CPU="90"  # CPU usage percentage that triggers alerts
 SYSTEM_ALERT_MEM="85"  # Memory usage percentage that triggers alerts
 SYSTEM_ALERT_DISK="90"  # Disk usage percentage that triggers alerts
+
+# Security settings
+SECURITY_LEVEL="normal"  # Options: basic, normal, thorough
+SKIP_NETWORK_SCAN="false"  # Skip network-related security checks
+
+# Database settings
+DB_DEFAULT_USER="root"  # Default database user
+DB_DEFAULT_HOST="localhost"  # Default database host
+DB_DEFAULT_PORT="3306"  # Default database port
+DB_BACKUP_RETENTION="30"  # Days to keep database backups
+
+# Connectivity settings
+DEFAULT_CONNECTIVITY_HOST="google.com"  # Default host for connectivity checks
+DEFAULT_PING_COUNT="3"  # Default number of pings for connectivity check
+DEFAULT_PING_TIMEOUT="5"  # Default timeout for ping in seconds
