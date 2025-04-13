@@ -24,6 +24,12 @@ CONFIG_FILE="./.cicd_config"
 # Ensure log directory exists
 mkdir -p $LOG_DIR
 
+# Check if required tools are installed
+if ! command -v git &> /dev/null; then
+    echo -e "${RED}Error: Git is not installed.${NC}"
+    exit 1
+fi
+
 # Load configuration if exists
 if [[ -f "$CONFIG_FILE" ]]; then
   source "$CONFIG_FILE"

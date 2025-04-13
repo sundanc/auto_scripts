@@ -209,6 +209,24 @@ arsenal_get_credential() {
   fi
 }
 
+# Prompt for missing credentials
+arsenal_prompt_missing_credentials() {
+  local credential_name="$1"
+  local prompt_message="$2"
+  local credential_value
+
+  # Check if the credential is already set
+  if [[ -z "${!credential_name}" ]]; then
+    echo -ne "${YELLOW}${prompt_message}: ${NC}"
+    read -s credential_value
+    echo ""
+    export "$credential_name"="$credential_value"
+  fi
+}
+
+# Example usage:
+# arsenal_prompt_missing_credentials "DB_PASSWORD" "Enter database password"
+
 # =============================================
 # DEPENDENCY CHECKING
 # =============================================

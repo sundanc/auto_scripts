@@ -12,6 +12,12 @@ BLUE='\033[0;34m'
 BOLD='\033[1m'
 NC='\033[0m' # No Color
 
+# Check if the system is Linux-based
+if [[ "$(uname -s)" != "Linux" ]]; then
+    echo -e "${RED}Error: This script is designed for Linux systems only.${NC}"
+    exit 1
+fi
+
 # Load configuration from arsenal.conf if available
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 CONFIG_FILE="$SCRIPT_DIR/../config/arsenal.conf"
@@ -95,6 +101,9 @@ check_dependencies() {
         echo -e "${YELLOW}Some security checks might be skipped${NC}"
     fi
 }
+
+# Ensure required credentials are provided (if applicable)
+arsenal_prompt_missing_credentials "ADMIN_EMAIL" "Enter admin email for notifications"
 
 # Header function
 print_header() {

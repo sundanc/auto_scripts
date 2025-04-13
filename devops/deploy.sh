@@ -12,6 +12,12 @@ usage() {
   exit 1
 }
 
+# Check if required tools are installed
+if ! command -v git &> /dev/null; then
+    echo "Error: Git is not installed."
+    exit 1
+fi
+
 # Process command line arguments
 while getopts "r:b:d:s:" opt; do
   case $opt in

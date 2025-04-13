@@ -27,6 +27,15 @@ log() {
     fi
 }
 
+# Ensure required credentials are provided
+arsenal_prompt_missing_credentials "DB_PASS" "Enter password for MySQL user $DB_USER"
+
+# Check if required tools are installed
+if ! command -v mysql &> /dev/null || ! command -v mysqldump &> /dev/null; then
+    echo -e "${RED}Error: Required MySQL tools (mysql, mysqldump) are not installed.${NC}"
+    exit 1
+fi
+
 # Function to check database connections
 check_connections() {
     log "INFO" "Checking database connections..."

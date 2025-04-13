@@ -10,6 +10,12 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
+# Check if Git is installed
+if ! command -v git &> /dev/null; then
+    echo -e "${RED}Error: Git is not installed.${NC}"
+    exit 1
+fi
+
 # Validate if we're in a git repository
 validate_git_repo() {
   if ! git rev-parse --git-dir > /dev/null 2>&1; then

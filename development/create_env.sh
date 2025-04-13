@@ -1,10 +1,9 @@
 #!/bin/bash
 # GitHub: https://github.com/sundanc/auto_scripts
 
-# Check if python3 is installed
-if ! command -v python3 &> /dev/null
-then
-    echo "python3 could not be found, please install it first."
+# Check if Python is installed
+if ! command -v python3 &> /dev/null; then
+    echo -e "${RED}Error: Python3 is not installed.${NC}"
     exit 1
 fi
 

@@ -114,6 +114,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
+# Check if required tools are installed
+if ! command -v mysqldump &> /dev/null; then
+    echo -e "${RED}Error: mysqldump command not found.${NC}"
+    echo -e "${YELLOW}Please install MySQL client tools.${NC}"
+    exit 1
+fi
+
 # Check required tools
 if ! command -v mysqldump &> /dev/null; then
     echo -e "${RED}Error: mysqldump command not found${NC}"
@@ -128,12 +135,8 @@ if [ -z "$DB_PASSWORD" ] && [ -n "$DB_PASS" ]; then
     DB_PASSWORD="$DB_PASS"
 fi
 
-# If still no password and not using socket authentication, prompt for it
-if [ -z "$DB_PASSWORD" ] && [ "$DB_USER" != "root" -o "$DB_HOST" != "localhost" ]; then
-    echo -ne "${YELLOW}Enter password for MySQL user $DB_USER: ${NC}"
-    read -s DB_PASSWORD
-    echo ""
-fi
+# Ensure required credentials are provided
+arsenal_prompt_missing_credentials "DB_PASSWORD" "Enter password for MySQL user $DB_USER"
 
 # Prepare MySQL credentials for command line
 if [ -n "$DB_PASSWORD" ]; then

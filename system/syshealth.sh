@@ -8,6 +8,12 @@ THRESHOLD_MULTIPLIER=1.5
 
 mkdir -p "$HISTORY_DIR"
 
+# Check if required tools are installed
+if ! command -v top &> /dev/null || ! command -v free &> /dev/null || ! command -v df &> /dev/null; then
+    echo -e "${RED}Error: Required tools (top, free, df) are not installed.${NC}"
+    exit 1
+fi
+
 # Get current metrics
 CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
 MEM_USAGE=$(free | grep Mem | awk '{print $3/$2 * 100.0}')
